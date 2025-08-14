@@ -1,51 +1,71 @@
 import streamlit as st
 import plotly.express as px
-import numpy as np
 import pandas as pd
+import numpy as np
 from sklearn.decomposition import PCA
+import gensim.downloader as api
 
-# ---------------------
-# Simulación de embeddings
-# ---------------------
-np.random.seed(42)
-n_palabras = 500
-dim = 100
-palabras = [f"palabra_{i}" for i in range(n_palabras)]
-embeddings = np.random.rand(n_palabras, dim)
+# -----------------------
+# Cargar modelo fastText español
+# -----------------------
+st.title("Visualización 3D de embeddings en español")
 
-# ---------------------
-# Reducción de dimensión a 2D (PCA)
-# ---------------------
-pca = PCA(n_components=2)
+st.write("Zoom, rota y explora el espacio semántico de palabras en español.")
+
+@st.cache_resource
+def load_model():
+    return api.load("fasttext-wiki-news-subwords-300")  # Modelo grande multilingüe (incluye español)
+
+model = load_model()
+
+# Lista de palabras en español (puedes ampliar)
+palabras = [
+    "gato", "perro", "ratón", "león", "tigre", "manzana", "banana", "naranja", "coche", "avión", "tren",
+    "computadora", "teléfono", "internet", "música", "guitarra", "piano", "batería", "fútbol", "baloncesto",
+    "río", "montaña", "océano", "ciudad", "pueblo", "escuela", "universidad", "profesor", "estudiante",
+    "amistad", "amor", "trabajo", "familia", "libro", "poesía", "historia", "ciencia", "arte", "película",
+    "cielo", "mar", "tierra", "fuego", "aire", "bosque", "desierto", "lluvia", "nieve", "sol"
+]
+
+# Filtrar solo las que están en el vocabulario
+palabras = [p for p in palabras if p in model]
+
+# Obtener embeddings
+embeddings = np.array([model[p] for p in palabras])
+
+# -----------------------
+# Reducir a 3D
+# -----------------------
+pca = PCA(n_components=3)
 coords = pca.fit_transform(embeddings)
 
 df = pd.DataFrame({
     "palabra": palabras,
     "x": coords[:, 0],
-    "y": coords[:, 1]
+    "y": coords[:, 1],
+    "z": coords[:, 2]
 })
 
-# ---------------------
-# Streamlit UI
-# ---------------------
-st.title("Visualización interactiva de embeddings")
-
-st.write("Usa el zoom para acercarte y ver las palabras con más detalle.")
-
-fig = px.scatter(
+# -----------------------
+# Visualización 3D
+# -----------------------
+fig = px.scatter_3d(
     df,
     x="x",
     y="y",
-    hover_name="palabra",  # Aparecen al pasar el mouse
-    opacity=0.7,
-    width=900,
-    height=700
+    z="z",
+    hover_name="palabra",
+    opacity=0.8
 )
 
 fig.update_traces(marker=dict(size=6))
 fig.update_layout(
-    title="Embeddings (PCA)",
-    hovermode="closest"
+    title="Embeddings de palabras en 3D (PCA en español)",
+    scene=dict(
+        xaxis_title="PCA 1",
+        yaxis_title="PCA 2",
+        zaxis_title="PCA 3"
+    )
 )
 
 st.plotly_chart(fig, use_container_width=True)
