@@ -22,78 +22,78 @@ nlp = load_model()
 # Lista de palabras (tu lista completa)
 palabras = [
     # Animales
-    "gato", "perro", "ratón", "lobo", "zorro", "tigre", "oso", "caballo", "vaca", "oveja", "cabra", "conejo",
-    "ardilla", "murciélago", "ciervo", "jirafa", "elefante", "león", "pantera", "puma", "gorila", "mono", "chimpancé",
-    "orangután", "ballena", "delfín", "tiburón", "foca", "pingüino", "águila", "halcón", "búho", "paloma", "canario",
+    "gato", "perro", "raton", "lobo", "zorro", "tigre", "oso", "caballo", "vaca", "oveja", "cabra", "conejo",
+    "ardilla", "murcielago", "ciervo", "jirafa", "elefante", "leon", "pantera", "puma", "gorila", "mono", "chimpance",
+    "orangutan", "ballena", "delfin", "tiburon", "foca", "pinguino", "aguila", "halcon", "buho", "paloma", "canario",
     "loro", "pavo", "pollo", "gallina", "gallo", "pato", "cisne", "ganso", "serpiente", "cocodrilo", "lagarto",
-    "iguana", "sapo", "tortuga", "cangrejo", "langosta", "camello", "hipopótamo", "rinoceronte", "zebra", "búfalo",
-    "bisonte", "cabrito", "potro", "mula", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo",
+    "iguana", "sapo", "tortuga", "cangrejo", "langosta", "camello", "hipopotamo", "rinoceronte", "zebra", "bufalo",
+    "bisonte", "cabrito", "potro", "mula", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo",
     "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
     # Colores
     "azul", "rojo", "blanco", "negro", "verde", "naranja", "celeste", "cian", "magenta", "marron", "rosa",
     # Sentimientos
-    "alegría", "tristeza", "ira", "miedo", "sorpresa", "asco", "amor", "odio", "esperanza", "desesperación",
-    "nostalgia", "orgullo", "vergüenza", "culpa", "gratitud", "compasión", "envidia", "celos", "ansiedad", "calma",
-    "satisfacción", "melancolía", "euforia", "pena", "soledad", "confianza", "desconfianza", "admiración", "rechazo", "ternura",
-    # Filosofía
-    "existencia", "esencia", "libertad", "determinismo", "moralidad", "ética", "virtud", "justicia", "verdad", "mentira",
-    "belleza", "fealdad", "tiempo", "eternidad", "infinito", "causalidad", "realidad", "ilusión", "ser", "nada",
-    "pensamiento", "razón", "emoción", "conocimiento", "ignorancia", "sabiduría", "duda", "certeza", "voluntad", "destino",
+    "alegria", "tristeza", "ira", "miedo", "sorpresa", "asco", "amor", "odio", "esperanza", "desesperacion",
+    "nostalgia", "orgullo", "verguenza", "culpa", "gratitud", "compasion", "envidia", "celos", "ansiedad", "calma",
+    "satisfaccion", "melancolia", "euforia", "pena", "soledad", "confianza", "desconfianza", "admiracion", "rechazo", "ternura",
+    # Filosofia
+    "existencia", "esencia", "libertad", "determinismo", "moralidad", "etica", "virtud", "justicia", "verdad", "mentira",
+    "belleza", "fealdad", "tiempo", "eternidad", "infinito", "causalidad", "realidad", "ilusion", "ser", "nada",
+    "pensamiento", "razon", "emocion", "conocimiento", "ignorancia", "sabiduria", "duda", "certeza", "voluntad", "destino",
     # Frutas y verduras
-    "manzana", "banana", "sandía", "melón", "pera", "uva", "fresa", "cereza", "limón", "kiwi", "papaya", "mango", "guayaba",
-    "maracuyá", "piña", "durazno", "ciruela", "granada", "higo", "tomate", "lechuga", "zanahoria", "cebolla", "ajo", "pepino",
-    "calabaza", "berenjena", "brócoli", "coliflor", "espinaca", "pimiento", "chile", "maíz", "guisante", "haba", "apio",
-    "rábano", "alcachofa", "batata",
+    "manzana", "banana", "sandia", "melon", "pera", "uva", "fresa", "cereza", "limon", "kiwi", "papaya", "mango", "guayaba",
+    "maracuya", "pina", "durazno", "ciruela", "granada", "higo", "tomate", "lechuga", "zanahoria", "cebolla", "ajo", "pepino",
+    "calabaza", "berenjena", "brocoli", "coliflor", "espinaca", "pimiento", "chile", "maiz", "guisante", "haba", "apio",
+    "rabano", "alcachofa", "batata",
 
-    # Elementos químicos
-    "hidrógeno", "helio", "litio", "berilio", "boro", "carbono", "nitrógeno", "oxígeno", "flúor", "neón",
-    "sodio", "magnesio", "aluminio", "silicio", "fósforo", "azufre", "cloro", "argón", "potasio", "calcio",
-    "escandio", "titanio", "vanadio", "cromo", "manganeso", "hierro", "cobalto", "níquel", "cobre", "zinc",
-    "galio", "germanio", "arsénico", "selenio", "bromo", "cripton", "rubidio", "estroncio", "itrio", "circonio",
-    "niobio", "molibdeno", "tecnecio", "rutenio", "rodio", "paladio", "plata", "cadmio", "indio", "estaño",
-    "antimonio", "telurio", "yodo", "xenón", "cesio", "bario", "lantano", "cerio", "praseodimio", "neodimio",
+    # Elementos quimicos
+    "hidrogeno", "helio", "litio", "berilio", "boro", "carbono", "nitrogeno", "oxigeno", "fluor", "neon",
+    "sodio", "magnesio", "aluminio", "silicio", "fosforo", "azufre", "cloro", "argon", "potasio", "calcio",
+    "escandio", "titanio", "vanadio", "cromo", "manganeso", "hierro", "cobalto", "niquel", "cobre", "zinc",
+    "galio", "germanio", "arsenico", "selenio", "bromo", "cripton", "rubidio", "estroncio", "itrio", "circonio",
+    "niobio", "molibdeno", "tecnecio", "rutenio", "rodio", "paladio", "plata", "cadmio", "indio", "estano",
+    "antimonio", "telurio", "yodo", "xenon", "cesio", "bario", "lantano", "cerio", "praseodimio", "neodimio",
     "prometio", "samario", "europio", "gadolinio", "terbio", "disprosio", "holmio", "erbio", "iterbio",
     "lutecio", "hafnio", "tantalio", "wolframio", "renio", "osmio", "iridio", "platino", "oro", "mercurio",
-    "talio", "plomo", "bismuto", "polonio", "astato", "radón", "francio", "radio", "actinio", "torio",
+    "talio", "plomo", "bismuto", "polonio", "astato", "radon", "francio", "radio", "actinio", "torio",
     "protactinio", "uranio", "neptunio", "plutonio", "americio", "curio", "berkelio", "californio", "einsteinio",
     "fermio", "mendelevio", "nobelio", "lawrencio",
 
-    # Dinero y economía
-    "dinero", "moneda", "billete", "banco", "inversión", "capital", "finanzas", "ahorro", "gasto",
-    "ganancia", "pérdida", "crédito", "déficit", "saldo", "presupuesto", "deuda", "impuesto", "ingreso", "interés",
-    "lucro", "beneficio", "dividendo", "patrimonio", "hipoteca", "préstamo", "pago", "cobro", "transacción", "tarifa",
-    "cotización", "divisa", "mercado", "comercio", "contrato", "venta", "compra", "exportación", "importación", "precio",
+    # Dinero y economia
+    "dinero", "moneda", "billete", "banco", "inversion", "capital", "finanzas", "ahorro", "gasto",
+    "ganancia", "perdida", "credito", "deficit", "saldo", "presupuesto", "deuda", "impuesto", "ingreso", "interes",
+    "lucro", "beneficio", "dividendo", "patrimonio", "hipoteca", "prestamo", "pago", "cobro", "transaccion", "tarifa",
+    "cotizacion", "divisa", "mercado", "comercio", "contrato", "venta", "compra", "exportacion", "importacion", "precio",
     "tarjeta", "cuenta", "subsidio", "bono", "subasta", "acciones", "coste", "oferta", "demanda", "fondo",
-    "arancel", "liquidez", "rentabilidad", "riesgo", "flujo", "inflación", "deflación", "valorización", "desvalorización", "cheque",
+    "arancel", "liquidez", "rentabilidad", "riesgo", "flujo", "inflacion", "deflacion", "valorizacion", "desvalorizacion", "cheque",
     "billetera", "saldo", "ahorrador", "inversionista", "cotista", "pagador", "deudor", "acreedor", "financista", "cajero",
 
     # Ciudades del mundo
-    "Bogotá", "París", "Londres", "Roma", "Madrid", "Berlín", "Ámsterdam", "Bruselas", "Viena", "Lisboa",
-    "Atenas", "Estocolmo", "Oslo", "Helsinki", "Copenhague", "Moscú", "Varsovia", "Praga", "Budapest", "Dublín",
-    "Zúrich", "Ginebra", "Múnich", "Frankfurt", "Barcelona", "Valencia", "Sevilla", "Granada", "Bilbao", "San Sebastián",
-    "Tokio", "Osaka", "Kioto", "Seúl", "Pekín", "Shanghái", "Hong Kong", "Taipéi", "Singapur", "Bangkok",
-    "Kuala Lumpur", "Manila", "Hanói", "Yakarta", "Delhi", "Bombay", "Calcuta", "Dubái", "Abu Dabi", "Doha",
-    "El Cairo", "Casablanca", "Marrakech", "Túnez", "Johannesburgo", "Ciudad del Cabo", "Nairobi", "Lagos", "Accra", "Dakar",
-    "Nueva York", "Los Ángeles", "Chicago", "San Francisco", "Miami", "Houston", "Toronto", "Vancouver", "Montreal", "Ottawa",
-    "México D.F.", "Guadalajara", "Monterrey", "Buenos Aires", "Córdoba", "Rosario", "Santiago", "Valparaíso", "Lima", "Cusco",
-    "Quito", "Guayaquil", "La Paz", "Santa Cruz", "Asunción", "Montevideo", "Punta del Este", "Caracas", "Maracaibo", "San Juan",
-    "medellin", "Barranquilla", "Santa Marta", "Cartagena", "Valledupar", "Junior", "carnaval", "cali",
+    "bogota", "paris", "londres", "roma", "madrid", "berlin", "amsterdam", "bruselas", "viena", "lisboa",
+    "atenas", "estocolmo", "oslo", "helsinki", "copenhague", "moscu", "varsovia", "praga", "budapest", "dublin",
+    "zurich", "ginebra", "munich", "frankfurt", "barcelona", "valencia", "sevilla", "granada", "bilbao", "san sebastian",
+    "tokio", "osaka", "kioto", "seul", "pekin", "shanghai", "hong kong", "taipei", "singapur", "bangkok",
+    "kuala lumpur", "manila", "hanoi", "yakarta", "delhi", "bombay", "calcuta", "dubai", "abu dabi", "doha",
+    "el cairo", "casablanca", "marrakech", "tunez", "johannesburgo", "ciudad del cabo", "nairobi", "lagos", "accra", "dakar",
+    "nueva york", "los angeles", "chicago", "san francisco", "miami", "houston", "toronto", "vancouver", "montreal", "ottawa",
+    "mexico d.f.", "guadalajara", "monterrey", "buenos aires", "cordoba", "rosario", "santiago", "valparaiso", "lima", "cusco",
+    "quito", "guayaquil", "la paz", "santa cruz", "asuncion", "montevideo", "punta del este", "caracas", "maracaibo", "san juan",
+    "medellin", "barranquilla", "santa marta", "cartagena", "valledupar", "junior", "carnaval", "cali", "senior", "desarrolador", 
     
     # Transportes
-    "carro", "avión", "tren", "barco", "bicicleta", "moto", "camión", "metro", "cohete", "submarino", "tractor", "helicóptero",
-    "patinete", "globo", "yate", "velero", "canoa", "kayak", "autobús", "tranvía",
-    # Tecnología
-    "computadora", "teléfono", "internet", "televisión", "radio", "cámara", "impresora", "robot", "dron", "satélite",
-    "teclado", "pantalla", "auriculares", "micrófono", "altavoz", "software", "hardware", "servidor", "red",
+    "carro", "avion", "tren", "barco", "bicicleta", "moto", "camion", "metro", "cohete", "submarino", "tractor", "helicoptero",
+    "patinete", "globo", "yate", "velero", "canoa", "kayak", "autobus", "tranvia",
+    # Tecnologia
+    "computadora", "telefono", "internet", "television", "radio", "camara", "impresora", "robot", "dron", "satelite",
+    "teclado", "pantalla", "auriculares", "microfono", "altavoz", "software", "hardware", "servidor", "red",
     # Lugares
-    "ciudad", "pueblo", "aldea", "capital", "barrio", "calle", "avenida", "plaza", "puente", "parque", "jardín", "museo",
-    "biblioteca", "universidad", "escuela", "estadio", "cine", "teatro", "restaurante", "hotel", "playa", "montaña", "río",
-    "lago", "mar", "océano", "desierto", "bosque", "selva", "caverna", "volcán", "catarata", "isla", "península", "glaciar",
+    "ciudad", "pueblo", "aldea", "capital", "barrio", "calle", "avenida", "plaza", "puente", "parque", "jardin", "museo",
+    "biblioteca", "universidad", "escuela", "estadio", "cine", "teatro", "restaurante", "hotel", "playa", "montana", "rio",
+    "lago", "mar", "oceano", "desierto", "bosque", "selva", "caverna", "volcan", "catarata", "isla", "peninsula", "glaciar",
     "acantilado", "valle", "llanura", "pradera", "costa",
     # Conceptos abstractos
-    "amistad", "felicidad", "valentía", "fe", "paz", "guerra", "honor", "perdón", "solidaridad", "paciencia",
-    "depresión", "entusiasmo", "energía", "fuerza", "debilidad", "riqueza", "pobreza", "éxito", "fracaso", "motivación",
-    "inspiración", "creatividad"
+    "amistad", "felicidad", "valentia", "fe", "paz", "guerra", "honor", "perdon", "solidaridad", "paciencia",
+    "depresion", "entusiasmo", "energia", "fuerza", "debilidad", "riqueza", "pobreza", "exito", "fracaso", "motivacion",
+    "inspiracion", "creatividad"
 ]
 
 # Obtener vectores válidos
@@ -181,6 +181,7 @@ if closest_words:
 if farthest_words:
     st.subheader(f"Palabras menos cercanas a '{query}'")
     st.dataframe(pd.DataFrame(farthest_words, columns=["Palabra", "Similitud coseno"]))
+
 
 
 
