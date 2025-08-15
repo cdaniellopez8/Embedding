@@ -80,11 +80,17 @@ df["color"] = "gray"
 
 # Sidebar
 with st.sidebar:
-    query = st.text_input("Buscar palabra:", "")
+    st.markdown(
+        "<h3 style='text-align: center; color: #4B4B4B;'>🔍 Buscar palabra</h3>",
+        unsafe_allow_html=True
+    )
+    query = st.text_input("", placeholder="Escribe la palabra que deseas buscar...")
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+
     st.markdown("""
-    <hr>
-    <div style="text-align: center; font-size: 0.9em; color: gray;">
-        Desarrollado por Carlos D. López P.
+    <div style="text-align: center; font-size: 0.85em; color: gray;">
+        Desarrollado por <strong>Carlos D. López P.</strong>
     </div>
     """, unsafe_allow_html=True)
 
@@ -140,6 +146,7 @@ if closest_words:
 if farthest_words:
     st.subheader(f"Palabras menos cercanas a '{query}'")
     st.dataframe(pd.DataFrame(farthest_words, columns=["Palabra", "Similitud coseno"]))
+
 
 
 
