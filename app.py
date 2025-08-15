@@ -52,7 +52,7 @@ palabras = [
     "galio", "germanio", "arsénico", "selenio", "bromo", "cripton", "rubidio", "estroncio", "itrio", "circonio",
     "niobio", "molibdeno", "tecnecio", "rutenio", "rodio", "paladio", "plata", "cadmio", "indio", "estaño",
     "antimonio", "telurio", "yodo", "xenón", "cesio", "bario", "lantano", "cerio", "praseodimio", "neodimio",
-    "prometio", "samario", "europio", "gadolinio", "terbio", "disprosio", "holmio", "erbio", "tulio", "iterbio",
+    "prometio", "samario", "europio", "gadolinio", "terbio", "disprosio", "holmio", "erbio", "iterbio",
     "lutecio", "hafnio", "tantalio", "wolframio", "renio", "osmio", "iridio", "platino", "oro", "mercurio",
     "talio", "plomo", "bismuto", "polonio", "astato", "radón", "francio", "radio", "actinio", "torio",
     "protactinio", "uranio", "neptunio", "plutonio", "americio", "curio", "berkelio", "californio", "einsteinio",
@@ -77,6 +77,7 @@ palabras = [
     "Nueva York", "Los Ángeles", "Chicago", "San Francisco", "Miami", "Houston", "Toronto", "Vancouver", "Montreal", "Ottawa",
     "México D.F.", "Guadalajara", "Monterrey", "Buenos Aires", "Córdoba", "Rosario", "Santiago", "Valparaíso", "Lima", "Cusco",
     "Quito", "Guayaquil", "La Paz", "Santa Cruz", "Asunción", "Montevideo", "Punta del Este", "Caracas", "Maracaibo", "San Juan",
+    "medellin", "Barranquilla", "Santa Marta", "Cartagena", "Valledupar", "Junior", "carnaval", "cali",
     
     # Transportes
     "carro", "avión", "tren", "barco", "bicicleta", "moto", "camión", "metro", "cohete", "submarino", "tractor", "helicóptero",
@@ -180,6 +181,7 @@ if closest_words:
 if farthest_words:
     st.subheader(f"Palabras menos cercanas a '{query}'")
     st.dataframe(pd.DataFrame(farthest_words, columns=["Palabra", "Similitud coseno"]))
+
 
 
 
