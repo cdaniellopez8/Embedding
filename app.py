@@ -84,7 +84,7 @@ with st.sidebar:
         "<h3 style='text-align: center; color: #4B4B4B;'>🔍 Buscar palabra</h3>",
         unsafe_allow_html=True
     )
-    query = st.text_input("Escribe que palabra quieres buscar en el embedding \(•◡•)/ ", placeholder="No demores... (ง︡'-'︠)ง")
+    query = st.text_input("Escribe que palabra quieres buscar en el embedding!", placeholder="No te demores... (ง︡'-'︠)ง")
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
@@ -146,6 +146,7 @@ if closest_words:
 if farthest_words:
     st.subheader(f"Palabras menos cercanas a '{query}'")
     st.dataframe(pd.DataFrame(farthest_words, columns=["Palabra", "Similitud coseno"]))
+
 
 
 
