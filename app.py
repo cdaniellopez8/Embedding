@@ -44,6 +44,40 @@ palabras = [
     "maracuyá", "piña", "durazno", "ciruela", "granada", "higo", "tomate", "lechuga", "zanahoria", "cebolla", "ajo", "pepino",
     "calabaza", "berenjena", "brócoli", "coliflor", "espinaca", "pimiento", "chile", "maíz", "guisante", "haba", "apio",
     "rábano", "alcachofa", "batata",
+
+    # Elementos químicos
+    "hidrógeno", "helio", "litio", "berilio", "boro", "carbono", "nitrógeno", "oxígeno", "flúor", "neón",
+    "sodio", "magnesio", "aluminio", "silicio", "fósforo", "azufre", "cloro", "argón", "potasio", "calcio",
+    "escandio", "titanio", "vanadio", "cromo", "manganeso", "hierro", "cobalto", "níquel", "cobre", "zinc",
+    "galio", "germanio", "arsénico", "selenio", "bromo", "cripton", "rubidio", "estroncio", "itrio", "circonio",
+    "niobio", "molibdeno", "tecnecio", "rutenio", "rodio", "paladio", "plata", "cadmio", "indio", "estaño",
+    "antimonio", "telurio", "yodo", "xenón", "cesio", "bario", "lantano", "cerio", "praseodimio", "neodimio",
+    "prometio", "samario", "europio", "gadolinio", "terbio", "disprosio", "holmio", "erbio", "tulio", "iterbio",
+    "lutecio", "hafnio", "tantalio", "wolframio", "renio", "osmio", "iridio", "platino", "oro", "mercurio",
+    "talio", "plomo", "bismuto", "polonio", "astato", "radón", "francio", "radio", "actinio", "torio",
+    "protactinio", "uranio", "neptunio", "plutonio", "americio", "curio", "berkelio", "californio", "einsteinio",
+    "fermio", "mendelevio", "nobelio", "lawrencio",
+
+    # Dinero y economía
+    "dinero", "moneda", "billete", "banco", "inversión", "capital", "finanzas", "ahorro", "gasto",
+    "ganancia", "pérdida", "crédito", "déficit", "saldo", "presupuesto", "deuda", "impuesto", "ingreso", "interés",
+    "lucro", "beneficio", "dividendo", "patrimonio", "hipoteca", "préstamo", "pago", "cobro", "transacción", "tarifa",
+    "cotización", "divisa", "mercado", "comercio", "contrato", "venta", "compra", "exportación", "importación", "precio",
+    "tarjeta", "cuenta", "subsidio", "bono", "subasta", "acciones", "coste", "oferta", "demanda", "fondo",
+    "arancel", "liquidez", "rentabilidad", "riesgo", "flujo", "inflación", "deflación", "valorización", "desvalorización", "cheque",
+    "billetera", "saldo", "ahorrador", "inversionista", "cotista", "pagador", "deudor", "acreedor", "financista", "cajero",
+
+    # Ciudades del mundo
+    "Bogotá", "París", "Londres", "Roma", "Madrid", "Berlín", "Ámsterdam", "Bruselas", "Viena", "Lisboa",
+    "Atenas", "Estocolmo", "Oslo", "Helsinki", "Copenhague", "Moscú", "Varsovia", "Praga", "Budapest", "Dublín",
+    "Zúrich", "Ginebra", "Múnich", "Frankfurt", "Barcelona", "Valencia", "Sevilla", "Granada", "Bilbao", "San Sebastián",
+    "Tokio", "Osaka", "Kioto", "Seúl", "Pekín", "Shanghái", "Hong Kong", "Taipéi", "Singapur", "Bangkok",
+    "Kuala Lumpur", "Manila", "Hanói", "Yakarta", "Delhi", "Bombay", "Calcuta", "Dubái", "Abu Dabi", "Doha",
+    "El Cairo", "Casablanca", "Marrakech", "Túnez", "Johannesburgo", "Ciudad del Cabo", "Nairobi", "Lagos", "Accra", "Dakar",
+    "Nueva York", "Los Ángeles", "Chicago", "San Francisco", "Miami", "Houston", "Toronto", "Vancouver", "Montreal", "Ottawa",
+    "México D.F.", "Guadalajara", "Monterrey", "Buenos Aires", "Córdoba", "Rosario", "Santiago", "Valparaíso", "Lima", "Cusco",
+    "Quito", "Guayaquil", "La Paz", "Santa Cruz", "Asunción", "Montevideo", "Punta del Este", "Caracas", "Maracaibo", "San Juan",
+    
     # Transportes
     "carro", "avión", "tren", "barco", "bicicleta", "moto", "camión", "metro", "cohete", "submarino", "tractor", "helicóptero",
     "patinete", "globo", "yate", "velero", "canoa", "kayak", "autobús", "tranvía",
@@ -146,6 +180,7 @@ if closest_words:
 if farthest_words:
     st.subheader(f"Palabras menos cercanas a '{query}'")
     st.dataframe(pd.DataFrame(farthest_words, columns=["Palabra", "Similitud coseno"]))
+
 
 
 
