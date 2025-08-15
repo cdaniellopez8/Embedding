@@ -4,6 +4,13 @@ import pandas as pd
 import numpy as np
 import spacy
 from sklearn.decomposition import PCA
+from spacy.cli import download
+
+try:
+    nlp = spacy.load("es_core_news_md")
+except OSError:
+    download("es_core_news_md")
+    nlp = spacy.load("es_core_news_md")
 
 # Cargar modelo de spaCy en español
 @st.cache_resource
@@ -133,6 +140,7 @@ if closest_words:
 if farthest_words:
     st.subheader(f"Palabras menos cercanas a '{query}'")
     st.dataframe(pd.DataFrame(farthest_words, columns=["Palabra", "Similitud coseno"]))
+
 
 
 
