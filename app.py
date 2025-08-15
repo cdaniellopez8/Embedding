@@ -1,109 +1,139 @@
 import streamlit as st
+import plotly.express as px
 import pandas as pd
 import numpy as np
-import plotly.express as px
-from sklearn.decomposition import PCA
 import spacy
+from sklearn.decomposition import PCA
 
-# -----------------------
-# Cargar modelo spaCy en español
-# -----------------------
+# Cargar modelo de spaCy en español
 @st.cache_resource
 def load_model():
     return spacy.load("es_core_news_md")
 
 nlp = load_model()
 
-# -----------------------
-# Lista gigante de palabras en español
-# -----------------------
+# Lista de palabras (tu lista completa)
 palabras = [
     # Animales
-    "gato","perro","ratón","león","tigre","oso","caballo","vaca","oveja","cabra","cerdo","mono","elefante","jirafa","cebra","hipopótamo","rinoceronte","lobo","zorro","conejo","ardilla","murciélago","delfín","ballena","tiburón","pingüino","águila","halcón","pato","gallina","pavo","cisne","buho","colibrí","flamenco",
-    # Frutas
-    "manzana","banana","naranja","sandía","melón","pera","uva","fresa","cereza","limón","kiwi","mango","papaya","piña","ciruela","durazno","granada","maracuyá","frambuesa","arándano","higo","guayaba","mandarina","coco","lichi",
-    # Vehículos
-    "coche","avión","tren","barco","bicicleta","moto","camión","metro","cohete","submarino","patineta","triciclo","helicóptero","yate","velero","globo","tractor","limusina","autobús",
-    # Tecnología
-    "computadora","teléfono","internet","televisión","radio","cámara","impresora","robot","dron","satélite","teclado","ratón","pantalla","altavoz","micrófono","consola","tablet","proyector",
-    # Música
-    "música","guitarra","piano","batería","violín","flauta","trompeta","canto","danza","teatro","arpa","saxofón","clarinete","trombón","banjo","acordeón",
-    # Deportes
-    "fútbol","baloncesto","tenis","natación","atletismo","voleibol","rugby","surf","boxeo","ciclismo","golf","esquí","snowboard","esgrima","karate","judo","taekwondo","gimnasia","escalada",
-    # Lugares
-    "río","montaña","océano","ciudad","pueblo","bosque","desierto","lago","cascada","isla","playa","valle","glaciar","cueva","volcán","pradera","acantilado","selva","campo",
-    # Educación
-    "escuela","universidad","profesor","estudiante","biblioteca","libro","cuaderno","pizarra","lápiz","pluma","mochila","regla","calculadora","tiza",
-    # Emociones
-    "amistad","amor","trabajo","familia","hogar","salud","dinero","felicidad","tristeza","miedo","ira","esperanza","ansiedad","orgullo","vergüenza","confianza","celos","paz","odio",
-    # Ciencias y artes
-    "historia","ciencia","arte","filosofía","literatura","poesía","matemáticas","física","química","biología","geografía","astronomía","pintura","escultura","fotografía","cine",
-    # Naturaleza
-    "cielo","mar","tierra","fuego","aire","lluvia","nieve","viento","tormenta","huracán","terremoto","inundación","marea","nube","rayo","granizo","rocío","brisa",
-    # Comida
-    "pan","queso","carne","pescado","huevo","arroz","pasta","ensalada","sopa","pizza","hamburguesa","taco","arepa","empanada","paella","curry","helado","chocolate","galleta","pastel","flan",
-    # Tiempo
-    "lunes","martes","miércoles","jueves","viernes","sábado","domingo","enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre",
-    # Profesiones
-    "doctor","abogado","ingeniero","maestro","enfermero","piloto","chef","mecánico","bombero","policía","arquitecto","científico","pintor","cantante","actor","escritor","programador","carpintero","panadero","electricista","fotógrafo",
+    "gato", "perro", "ratón", "lobo", "zorro", "tigre", "oso", "caballo", "vaca", "oveja", "cabra", "conejo",
+    "ardilla", "murciélago", "ciervo", "jirafa", "elefante", "león", "pantera", "puma", "gorila", "mono", "chimpancé",
+    "orangután", "ballena", "delfín", "tiburón", "foca", "pingüino", "águila", "halcón", "búho", "paloma", "canario",
+    "loro", "pavo", "pollo", "gallina", "gallo", "pato", "cisne", "ganso", "serpiente", "cocodrilo", "lagarto",
+    "iguana", "sapo", "tortuga", "cangrejo", "langosta", "camello", "hipopótamo", "rinoceronte", "zebra", "búfalo",
+    "bisonte", "cabrito", "potro", "mula", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo",
+    "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
     # Colores
-    "rojo","azul","verde","amarillo","naranja","morado","rosa","negro","blanco","gris","marrón","beige","turquesa","violeta","dorado","plateado",
-    # Objetos cotidianos
-    "mesa","silla","cama","puerta","ventana","lámpara","reloj","cuadro","alfombra","cortina","armario","espejo","sofá","televisor","teléfono","taza","plato","cuchara","tenedor","cuchillo",
+    "azul", "rojo", "blanco", "negro", "verde", "naranja", "celeste", "cian", "magenta", "marron", "rosa",
+    # Sentimientos
+    "alegría", "tristeza", "ira", "miedo", "sorpresa", "asco", "amor", "odio", "esperanza", "desesperación",
+    "nostalgia", "orgullo", "vergüenza", "culpa", "gratitud", "compasión", "envidia", "celos", "ansiedad", "calma",
+    "satisfacción", "melancolía", "euforia", "pena", "soledad", "confianza", "desconfianza", "admiración", "rechazo", "ternura",
+    # Filosofía
+    "existencia", "esencia", "libertad", "determinismo", "moralidad", "ética", "virtud", "justicia", "verdad", "mentira",
+    "belleza", "fealdad", "tiempo", "eternidad", "infinito", "causalidad", "realidad", "ilusión", "ser", "nada",
+    "pensamiento", "razón", "emoción", "conocimiento", "ignorancia", "sabiduría", "duda", "certeza", "voluntad", "destino",
+    # Frutas y verduras
+    "manzana", "banana", "sandía", "melón", "pera", "uva", "fresa", "cereza", "limón", "kiwi", "papaya", "mango", "guayaba",
+    "maracuyá", "piña", "durazno", "ciruela", "granada", "higo", "tomate", "lechuga", "zanahoria", "cebolla", "ajo", "pepino",
+    "calabaza", "berenjena", "brócoli", "coliflor", "espinaca", "pimiento", "chile", "maíz", "guisante", "haba", "apio",
+    "rábano", "alcachofa", "batata",
+    # Transportes
+    "carro", "avión", "tren", "barco", "bicicleta", "moto", "camión", "metro", "cohete", "submarino", "tractor", "helicóptero",
+    "patinete", "globo", "yate", "velero", "canoa", "kayak", "autobús", "tranvía",
+    # Tecnología
+    "computadora", "teléfono", "internet", "televisión", "radio", "cámara", "impresora", "robot", "dron", "satélite",
+    "teclado", "pantalla", "auriculares", "micrófono", "altavoz", "software", "hardware", "servidor", "red",
+    # Lugares
+    "ciudad", "pueblo", "aldea", "capital", "barrio", "calle", "avenida", "plaza", "puente", "parque", "jardín", "museo",
+    "biblioteca", "universidad", "escuela", "estadio", "cine", "teatro", "restaurante", "hotel", "playa", "montaña", "río",
+    "lago", "mar", "océano", "desierto", "bosque", "selva", "caverna", "volcán", "catarata", "isla", "península", "glaciar",
+    "acantilado", "valle", "llanura", "pradera", "costa",
+    # Conceptos abstractos
+    "amistad", "felicidad", "valentía", "fe", "paz", "guerra", "honor", "perdón", "solidaridad", "paciencia",
+    "depresión", "entusiasmo", "energía", "fuerza", "debilidad", "riqueza", "pobreza", "éxito", "fracaso", "motivación",
+    "inspiración", "creatividad"
 ]
 
-# -----------------------
-# Sidebar con buscador
-# -----------------------
-st.sidebar.header("Buscador de palabra")
-palabra_buscar = st.sidebar.text_input("Escribe una palabra en español:").strip().lower()
+# Obtener vectores válidos
+tokens = [nlp(word) for word in palabras]
+all_vectors = [token.vector for token in tokens]
 
-if palabra_buscar and palabra_buscar not in palabras:
-    palabras.append(palabra_buscar)
+valid_data = [(word, vec) for word, vec in zip(palabras, all_vectors) if vec is not None and np.any(vec)]
+valid_words, vectors = zip(*valid_data)
+vectors = np.array(vectors)
 
-# -----------------------
-# Obtener embeddings
-# -----------------------
-embeddings = np.array([nlp(p).vector for p in palabras])
-
-# -----------------------
 # Reducir a 3D
-# -----------------------
 pca = PCA(n_components=3)
-coords = pca.fit_transform(embeddings)
+coords = pca.fit_transform(vectors)
 
-df = pd.DataFrame({
-    "palabra": palabras,
-    "x": coords[:, 0],
-    "y": coords[:, 1],
-    "z": coords[:, 2],
-    "color": ["red" if p == palabra_buscar else "blue" for p in palabras]
-})
+# DataFrame para Plotly
+df = pd.DataFrame(coords, columns=["x", "y", "z"])
+df["word"] = valid_words
+df["color"] = "gray"
 
-# -----------------------
+# Sidebar
+with st.sidebar:
+    query = st.text_input("Buscar palabra:", "")
+    st.markdown("""
+    <hr>
+    <div style="text-align: center; font-size: 0.9em; color: gray;">
+        Desarrollado por Carlos D. López P.
+    </div>
+    """, unsafe_allow_html=True)
+
+# --- Título y descripción ---
+st.title(" Visualización de embeddings en 3D (Español)")
+
+st.markdown("""
+Esta aplicación muestra una representación tridimensional de **vectores semánticos** de palabras en español.
+Cada palabra está ubicada en el espacio según su similitud de significado calculada con un **modelo de lenguaje**.
+
+ **Cómo funciona:**
+- El modelo `es_core_news_md` de spaCy asigna a cada palabra un vector de 300 dimensiones.
+- Estos vectores se reducen a 3 dimensiones usando **PCA** para que puedan visualizarse.
+- La similitud entre palabras se calcula usando **similitud de coseno** (1 = idénticos, 0 = no relacionados, -1 = opuestos).
+- Si escribes una palabra en el buscador de la izquierda, se resaltará en rojo junto con sus **10 palabras más cercanas**.
+- Debajo del gráfico verás una **tabla** con esas palabras cercanas y su similitud de coseno.
+""")
+
+# Inicializar listas
+closest_words = []
+farthest_words = []
+
+# Si hay búsqueda
+if query.strip() and query in valid_words:
+    query_vec = nlp(query).vector
+    sims = np.dot(vectors, query_vec) / (np.linalg.norm(vectors, axis=1) * np.linalg.norm(query_vec))
+    
+    # Más cercanas
+    closest_idx = sims.argsort()[::-1][1:11]
+    closest_words = [(valid_words[i], sims[i]) for i in closest_idx]
+    df.loc[df["word"].isin([w for w, _ in closest_words]), "color"] = "Más cercanas"
+    
+    # Menos cercanas
+    farthest_idx = sims.argsort()[:10]
+    farthest_words = [(valid_words[i], sims[i]) for i in farthest_idx]
+    df.loc[df["word"].isin([w for w, _ in farthest_words]), "color"] = "Más lejanas"
+
 # Visualización 3D
-# -----------------------
-fig = px.scatter_3d(
-    df,
-    x="x",
-    y="y",
-    z="z",
-    color="color",
-    hover_name="palabra",
-    opacity=0.8,
-    width=1000,
-    height=1000
-)
+fig = px.scatter_3d(df, x="x", y="y", z="z", text="word", color="color",
+                    color_discrete_map={"gray": "gray", "Más cercanas": "red", "Más lejanas": "blue"})
+fig.update_traces(marker=dict(size=4), textposition="top center")
+fig.update_layout(scene=dict(xaxis_title='', yaxis_title='', zaxis_title=''))
 
-fig.update_traces(marker=dict(size=5))
-fig.update_layout(
-    title="Visualización 3D de embeddings en español",
-    scene=dict(
-        xaxis_title=None,
-        yaxis_title=None,
-        zaxis_title=None
-    ),
-    showlegend=False
-)
 
+# Mostrar gráfico
 st.plotly_chart(fig, use_container_width=True)
+
+# Mostrar tablas **debajo del gráfico**
+if closest_words:
+    st.subheader(f"Palabras más cercanas a '{query}'")
+    st.dataframe(pd.DataFrame(closest_words, columns=["Palabra", "Similitud coseno"]))
+    
+if farthest_words:
+    st.subheader(f"Palabras menos cercanas a '{query}'")
+    st.dataframe(pd.DataFrame(farthest_words, columns=["Palabra", "Similitud coseno"]))
+
+
+
+
