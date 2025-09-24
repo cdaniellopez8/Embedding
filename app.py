@@ -20,7 +20,7 @@ def load_model():
 nlp = load_model()
 
 st.set_page_config(
-    page_title="Embedding Visualization",
+    page_title="Embedding",
     page_icon="🌐",  
     layout="wide"
 )
@@ -187,6 +187,7 @@ if closest_words:
 if farthest_words:
     st.subheader(f"Palabras menos cercanas a '{query}'")
     st.dataframe(pd.DataFrame(farthest_words, columns=["Palabra", "Similitud coseno"]))
+
 
 
 
